@@ -1,5 +1,6 @@
 <?php
 
+require_once ('core/core.php');
 if (!isset($_REQUEST['c'])) {
 	$controller = "index";
 	require_once('controller/'.$controller.'Controller.php');
