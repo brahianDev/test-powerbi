@@ -15,12 +15,12 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user" action="?c=login&m=usersLogin" method="post">
+                    <form class="user" action="login/usersLogin" method="post">
                         <div class="form-group">
-                        <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                        <input type="email" class="form-control form-control-user" id="userEmail" name="userEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                         </div>
                         <div class="form-group">
-                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                        <input type="password" class="form-control form-control-user" id="userPassword" name="userPassword" placeholder="Password">
                         </div>
                         <div class="form-group">
                         <div class="custom-control custom-checkbox small">

@@ -1,0 +1,9 @@
+# Activar RewriteEngine
+RewriteEngine on
+ 
+# Reescribir la URL solicitada por el usuario
+#   Entrada:  index/NOMBRE/
+#   Salida: index.php?id=NOMBRE
+RewriteRule ^(\w+)/?$ index.php?c=index&m=$1&error=$2
+RewriteRule ^login/(\w+)/?$ index.php?c=login&m=$1
+RewriteRule ^usuario/(\w+)/?$ index.php?c=user&m=$1

@@ -3,21 +3,26 @@
 
 class loginController extends login
 {
+    public function error() {
+        require_once('view/all/header.php');
+        require_once('view/login/errorLogin.php');
+    }
+
     public function usersLogin() {
-        if (isset($_POST['inpEmail']) && isset($_POST['inpPass'])) {
-            $mailUser = trim($_POST['inpEmail']);
-            $passUser = trim($_POST['inpPass']);
+        if (isset($_POST['userEmail']) && isset($_POST['userPassword'])) {
+            $mailUser = trim($_POST['userEmail']);
+            $passUser = trim($_POST['userPassword']);
 
             foreach (parent::loginUsers($mailUser) as $user) {}
             if (isset($user) && !empty($user)) {
-                if ($mailUser == $user->user_mail && $passUser == $user->user_password) {
-                    security::datesAdmin($user->user_name, $user->user_mail);
-                    header('location:?c=index&m=admin');
+                if ($mailUser == $user->email && $passUser == $user->clave && $user->rol == $this->getRol('admin')) {
+                    security::datesAdmin($user->nombre, $user->apellido, $user->email, $user->rol_id);
+                    header('location: '.APP_URL.'home');
                 } else {
-                    header('location:?c=index&m=index&ucfail=true');
+                    header('location: '.APP_URL.'login/error');
                 }
             } else {
-                header('location:?c=index&m=index&untfail=true');
+                header('location: '.APP_URL.'login/error');
             }
         } else {
             echo 'Algo salio mal !';
@@ -27,6 +32,17 @@ class loginController extends login
     public function destroySession() {
         session_destroy();
 
-        return '?c=index&m=index&untfail=true';
+        header('location: '.APP_URL);
+    }
+
+    public function getRol($type) {
+        switch ($type) {
+            case 'admin':
+                return 'administrador';
+            break;
+            default:
+                return false;
+            break;
+        }
     }
 }
