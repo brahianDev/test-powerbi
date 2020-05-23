@@ -5,7 +5,10 @@
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Importar</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        <form action="<?php echo(APP_URL) ?>usuario/load" method="POST" enctype="multipart/form-data">
+          <input type="file" class="btn btn-info" name="upload" id="upload"><i class="fas fa-download fa-sm text-white-50"></i></a>
+          <button type="submit" class="btn btn-success btn-circle"><i class="fas fa-check"></i></a>
+        </form>
       </div>
 
       <!-- Content Row -->
