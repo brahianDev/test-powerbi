@@ -26,7 +26,7 @@
     <footer class="sticky-footer bg-white">
         <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; @brahian-dev <?php echo date('Y') ?> </span>
         </div>
         </div>
     </footer>
@@ -42,5 +42,10 @@
 
     <script src="<?php echo(APP_URL) ?>assets/js/chart-area-demo.js"></script>
     <script src="<?php echo(APP_URL) ?>assets/js/chart-pie-demo.js"></script>
+
+    <script src="<?php echo(APP_URL) ?>vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?php echo(APP_URL) ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="<?php echo(APP_URL) ?>assets/js/datatables-demo.js"></script>
 </body>
 </html>

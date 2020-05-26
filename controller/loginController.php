@@ -18,6 +18,8 @@ class loginController extends login
                 if ($mailUser == $user->email && $passUser == $user->clave && $user->rol == $this->getRol('admin')) {
                     security::datesAdmin($user->nombre, $user->apellido, $user->email, $user->rol_id);
                     header('location: '.APP_URL.'home');
+                } else if($mailUser == $user->email && $passUser == $user->clave && $user->rol == $this->getRol('student')) {
+                    echo 'Entra como estudiante';
                 } else {
                     header('location: '.APP_URL.'login/error');
                 }
@@ -39,6 +41,9 @@ class loginController extends login
         switch ($type) {
             case 'admin':
                 return 'administrador';
+            break;
+            case 'student':
+                return 'estudiantes';
             break;
             default:
                 return false;

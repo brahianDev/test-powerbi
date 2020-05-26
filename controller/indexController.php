@@ -25,6 +25,29 @@ class indexController extends index {
         require_once('view/all/footer.php');
     }
 
+    public function roles() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/rol.php');
+        require_once('view/all/footer.php');
+    }
+    
+    public function usuarios() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/users.php');
+        require_once('view/all/footer.php');
+    }
+
+    public function error() {
+        require_once('view/all/header.php');
+        require_once('view/all/error.php');
+    }
+
 }
 
 ?>

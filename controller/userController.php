@@ -40,7 +40,53 @@ class userController extends users {
             parent::insertStudents($datos);
         }
     }
-    
+
+    public function rol() {
+        $nombre_rol = $_POST['rol_name'];
+        $codigo_estado = $_POST['rol_estado'];
+        $data = [
+            "rol" => strtolower($nombre_rol),
+            "estado" => strtolower($codigo_estado)
+        ];
+
+        try {
+            parent::insertRol($data);
+            header('location: '.APP_URL.'roles');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function crear() {
+        $nombre = $_POST['name'];
+        $apellido = $_POST['lastname'];
+        $pass = $_POST['password'];
+        $estado = $_POST['estado'];
+        $tipoDocumento = $_POST['type_identification'];
+        $documento = $_POST['document'];
+        $fechaNacimiento = $_POST['date'];
+        $telefono = $_POST['phone'];
+        $correo = $_POST['email'];
+        $data = [
+            "nombre" => strtolower($nombre),
+            "apellido" => strtolower($apellido),
+            "pass" => strtolower($pass),
+            "estado" => strtolower($estado),
+            "tipoDocumento" => strtolower($tipoDocumento),
+            "documento" => strtolower($documento),
+            "fechaNacimiento" => strtolower($fechaNacimiento),
+            "telefono" => strtolower($telefono),
+            "correo" => strtolower($correo)
+        ];
+
+        try {
+            parent::insertUser($data);
+            header('location: '.APP_URL.'usuarios');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
 }
 
 ?>
