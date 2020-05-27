@@ -95,7 +95,7 @@
                     {
                     ?>
                       <tr>
-                        <td><?php echo ucfirst($users->nombre) ?></td>
+                        <td><a href="<?php echo APP_URL.'usuario/editar/'.$users->id ?>"><?php echo ucfirst($users->nombre) ?></a></td>
                         <td><?php echo ucfirst($users->apellido) ?></td>
                         <td><?php echo parent::getState($users->estado) ?></td>
                         <td><?php echo parent::getDocument($users->tipo_identificacion) ?></td>

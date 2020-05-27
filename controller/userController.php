@@ -87,6 +87,62 @@ class userController extends users {
         }
     }
 
+    public function actualizar() {
+        $nombre = $_POST['name'];
+        $apellido = $_POST['lastname'];
+        $estado = $_POST['estado'];
+        $tipoDocumento = $_POST['type_identification'];
+        $documento = $_POST['document'];
+        $fechaNacimiento = $_POST['date'];
+        $telefono = $_POST['phone'];
+        $correo = $_POST['email'];
+        $id = $_POST['id'];
+        $data = [
+            "nombre" => strtolower($nombre),
+            "apellido" => strtolower($apellido),
+            "estado" => strtolower($estado),
+            "tipoDocumento" => strtolower($tipoDocumento),
+            "documento" => strtolower($documento),
+            "fechaNacimiento" => strtolower($fechaNacimiento),
+            "telefono" => strtolower($telefono),
+            "correo" => strtolower($correo),
+            "id" => $id
+        ];
+
+        try {
+           parent::updateUser($data);
+           header('location: '.APP_URL.'usuarios');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function asignar() {
+        $rol = $_POST['rol'];
+        $estado = $_POST['estado'];
+        $id = $_POST['id'];
+        $data = [
+            "rol" => (int)$rol,
+            "estado" => (int)$estado,
+            "id" => (int)$id
+        ];
+        // print_r($data);
+        try {
+            parent::assignRol($data);
+            header('location: '.APP_URL.'usuarios');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function editar() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/userEdit.php');
+        require_once('view/all/footer.php');
+    }
 }
 
 ?>
