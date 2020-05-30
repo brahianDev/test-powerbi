@@ -43,6 +43,24 @@ class indexController extends index {
         require_once('view/all/footer.php');
     }
 
+    public function estudiantes() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/students.php');
+        require_once('view/all/footer.php');
+    }
+
+    public function powerbi() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/powerbi.php');
+        require_once('view/all/footer.php');
+    }
+
     public function error() {
         require_once('view/all/header.php');
         require_once('view/all/error.php');

@@ -8,3 +8,4 @@ RewriteRule ^(\w+)/?$ index.php?c=index&m=$1
 RewriteRule ^login/(\w+)/?$ index.php?c=login&m=$1
 RewriteRule ^usuario/(\w+)/?$ index.php?c=user&m=$1
 RewriteRule ^usuario/(\w+)/(\w+)/?$ index.php?c=user&m=$1&u=$2
+RewriteRule ^estudiantes/(\w+)/(\w+)/?$ index.php?c=user&m=$1&u=$2

@@ -7,4 +7,5 @@ final class preparedIndexSql
     const getStates = "SELECT idEstado, nombreEstado FROM estado";
     const getTypeDocument = "SELECT id, tipo FROM tipo_identificacion";
     const getUsers = "SELECT * FROM usuarios";
+    const getAllEstudents = "SELECT * FROM estudiante JOIN matricula_estudiante ON matricula_estudiante.estudiante_identificacion = estudiante.identificacion INNER JOIN matricula ON matricula.idmatricula = matricula_estudiante.matricula_idmatricula INNER JOIN programa ON programa.codigoPrograma = matricula.programa_idprograma INNER JOIN grado ON grado.idgradoacademico = programa.grado_idgradoacademico WHERE estudiante.estado = 1";
 }

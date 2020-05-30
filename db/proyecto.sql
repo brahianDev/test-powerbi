@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 23, 2020 at 08:52 PM
+-- Generation Time: May 27, 2020 at 03:51 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.13
 
@@ -39,7 +39,9 @@ CREATE TABLE `accion` (
 --
 
 INSERT INTO `accion` (`id`, `nombre_accion`, `url_accion`) VALUES
-(1, 'importar', 'importar');
+(1, 'importar', 'importar'),
+(2, 'roles', 'roles'),
+(3, 'usuarios', 'usuarios');
 
 -- --------------------------------------------------------
 
@@ -50,15 +52,18 @@ INSERT INTO `accion` (`id`, `nombre_accion`, `url_accion`) VALUES
 CREATE TABLE `accion_usuario` (
   `id` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
-  `id_accion` int(11) NOT NULL
+  `id_accion` int(11) NOT NULL,
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accion_usuario`
 --
 
-INSERT INTO `accion_usuario` (`id`, `id_rol`, `id_accion`) VALUES
-(1, 1, 1);
+INSERT INTO `accion_usuario` (`id`, `id_rol`, `id_accion`, `estado`) VALUES
+(4, 5, 1, 1),
+(5, 5, 2, 1),
+(6, 5, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -143,15 +148,17 @@ CREATE TABLE `programa` (
 
 CREATE TABLE `rol` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(200) NOT NULL
+  `nombre` varchar(200) NOT NULL,
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rol`
 --
 
-INSERT INTO `rol` (`id`, `nombre`) VALUES
-(1, 'administrador');
+INSERT INTO `rol` (`id`, `nombre`, `estado`) VALUES
+(5, 'administrador', 1),
+(6, 'estudiantes', 1);
 
 -- --------------------------------------------------------
 
@@ -162,15 +169,17 @@ INSERT INTO `rol` (`id`, `nombre`) VALUES
 CREATE TABLE `rol_usuarios` (
   `id` int(11) NOT NULL,
   `cod_rol` int(11) NOT NULL,
-  `cod_usuario` int(11) NOT NULL
+  `cod_usuario` int(11) NOT NULL,
+  `cod_estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rol_usuarios`
 --
 
-INSERT INTO `rol_usuarios` (`id`, `cod_rol`, `cod_usuario`) VALUES
-(590, 1, 1);
+INSERT INTO `rol_usuarios` (`id`, `cod_rol`, `cod_usuario`, `cod_estado`) VALUES
+(592, 5, 1, 1),
+(594, 6, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -214,7 +223,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `clave`, `estado`, `tipo_identificacion`, `nit`, `fecha_nacimiento`, `celular`, `email`) VALUES
-(1, 'brahian', 'sanchez', '123', 1, 1, '1003633419', '2000-07-01', '3202522965', 'brahians0701@gmail.com');
+(1, 'brahian', 'sánchez', '123', 1, 1, '1003633419', '2000-07-01', '3202522965', 'brahians0701@gmail.com'),
+(3, 'sara', 'estrada', '123', 1, 1, '123', '2020-05-25', '23443211', 'sara@gmail.com'),
+(4, 'andres', 'estrada', '123', 1, 1, '123456789', '2020-05-11', '234121312', 'andres@hotmail.com');
 
 --
 -- Indexes for dumped tables
@@ -232,7 +243,8 @@ ALTER TABLE `accion`
 ALTER TABLE `accion_usuario`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_accion` (`id_accion`),
-  ADD KEY `id_rol` (`id_rol`);
+  ADD KEY `id_rol` (`id_rol`),
+  ADD KEY `estado` (`estado`);
 
 --
 -- Indexes for table `estado`
@@ -271,7 +283,8 @@ ALTER TABLE `programa`
 -- Indexes for table `rol`
 --
 ALTER TABLE `rol`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `estado` (`estado`);
 
 --
 -- Indexes for table `rol_usuarios`
@@ -279,7 +292,8 @@ ALTER TABLE `rol`
 ALTER TABLE `rol_usuarios`
   ADD PRIMARY KEY (`id`,`cod_rol`,`cod_usuario`),
   ADD KEY `fk_rolusu_usuario_idx` (`cod_usuario`),
-  ADD KEY `fk_rolusu_rol_idx` (`cod_rol`);
+  ADD KEY `fk_rolusu_rol_idx` (`cod_rol`),
+  ADD KEY `estado` (`cod_estado`);
 
 --
 -- Indexes for table `tipo_identificacion`
@@ -303,13 +317,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `accion`
 --
 ALTER TABLE `accion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `accion_usuario`
 --
 ALTER TABLE `accion_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `estado`
@@ -339,13 +353,13 @@ ALTER TABLE `matricula`
 -- AUTO_INCREMENT for table `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `rol_usuarios`
 --
 ALTER TABLE `rol_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=591;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=595;
 
 --
 -- AUTO_INCREMENT for table `tipo_identificacion`
@@ -357,7 +371,7 @@ ALTER TABLE `tipo_identificacion`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -368,7 +382,8 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `accion_usuario`
   ADD CONSTRAINT `accion_usuario_ibfk_1` FOREIGN KEY (`id_accion`) REFERENCES `accion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `accion_usuario_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `accion_usuario_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `accion_usuario_ibfk_3` FOREIGN KEY (`estado`) REFERENCES `estado` (`idEstado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `programa`
@@ -379,11 +394,18 @@ ALTER TABLE `programa`
   ADD CONSTRAINT `programa_ibfk_1` FOREIGN KEY (`codEstudiante`) REFERENCES `estudiante` (`idEstudiante`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `rol`
+--
+ALTER TABLE `rol`
+  ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `estado` (`idEstado`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `rol_usuarios`
 --
 ALTER TABLE `rol_usuarios`
   ADD CONSTRAINT `fk_rolusu_rol` FOREIGN KEY (`cod_rol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rolusu_usuario` FOREIGN KEY (`cod_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_rolusu_usuario` FOREIGN KEY (`cod_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rol_usuarios_ibfk_1` FOREIGN KEY (`cod_estado`) REFERENCES `estado` (`idEstado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `usuarios`

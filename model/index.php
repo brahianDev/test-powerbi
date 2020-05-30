@@ -43,6 +43,16 @@ class index extends database {
         }
     }
 
+    public function getAllStudents() {
+        try {
+            $stm = parent::conexion()->prepare(preparedIndexSql::getAllEstudents);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        } 
+    }
+
 
     public static function getState($state){
         switch ($state) {
@@ -61,7 +71,7 @@ class index extends database {
     public static function getDocument($type){
         switch ($type) {
             case '1':
-                return 'Cedula';
+                return 'Cédula';
             break;
             
             default:

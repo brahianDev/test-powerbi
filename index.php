@@ -14,4 +14,4 @@ if (!isset($_REQUEST['c'])) {
 	$controller = new $controller();
 	$metodo = isset($_REQUEST['m'])? $_REQUEST['m']:'index';
 	call_user_func(array($controller,$metodo));
-} 
+}

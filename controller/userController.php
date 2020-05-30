@@ -18,26 +18,64 @@ class userController extends users {
         $objPHPExcel->setActiveSheetIndex(0);
         $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
 
-        for($i = 2; $i <= $numRows; $i++){
+        for($i = 2; $i <= 11; $i++){
+            $id_registro = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
             $id_estudiante = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
             $documento_estudiante = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
             $nombre = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
             $fecha_nacimiento = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getFormattedValue();
             $cursos = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
 
+            $cod_programa = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+            $programa = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+            $grade = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+            $code_grade = $this->getGrade($grade);
+
+            $vinculation = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+            $value_carge = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+            $value_payment = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+            $value_scholarship = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+
             $datos = [
                 "id_estudiante" => $id_estudiante,
                 "nombre_estudiante" => $nombre,
                 "documento_estudiante" => $documento_estudiante,
                 "fecha_nacimiento" => date('Y-m-d', strtotime($fecha_nacimiento)),
-                "cursos" => $cursos
-
+                "cursos" => $cursos,
+                "estado" => $this->getState('active')
             ];
 
-            // print_r($datos);
+            $datos_programa = [
+                "codigo_programa" => $cod_programa,
+                "programa" => $programa,
+                "grado" => $code_grade
+            ];
+
+            $datos_matricula = [
+                "tipo_vinculacion" => $vinculation,
+                "valor_cargo" => $value_carge,
+                "valor_pago" => $value_payment,
+                "valor_beca" => $value_scholarship,
+                "codigo_programa" => $cod_programa
+            ];
+
+            $datos_matricula_estudiante = [
+                "matricula_id" => (int)$id_registro,
+                "estudiante" => (string)$id_estudiante
+            ];
+            
+            // print_r($datos_matricula_estudiante);
             // echo '<br>';
 
-            parent::insertStudents($datos);
+            try {
+                parent::insertStudents($datos);
+                parent::insertProgram($datos_programa);
+                parent::insertMatricula($datos_matricula);
+                parent::insertMatriculaEstudiante($datos_matricula_estudiante);
+                header('location: '.APP_URL.'importar');
+            } catch (\Throwable $th) {
+                header('location: '.APP_URL.'error');
+            } 
         }
     }
 
@@ -52,6 +90,26 @@ class userController extends users {
         try {
             parent::insertRol($data);
             header('location: '.APP_URL.'roles');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function eliminar() {
+        try {
+            $id = $_POST['id'];
+            parent::deleteUser($id);
+            header('location: '.APP_URL.'usuarios');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function eliminarEstudiante() {
+        try {
+            $id = $_POST['id'];
+            parent::deleteStudent($id);
+            header('location: '.APP_URL.'estudiantes');
         } catch (\Throwable $th) {
             header('location: '.APP_URL.'error');
         }
@@ -117,6 +175,35 @@ class userController extends users {
         }
     }
 
+    public function edit() {
+        security::validateSession();
+        require_once('view/all/header.php');
+        require_once('view/all/sidebar.php');
+        require_once('view/all/navbar.php');
+        require_once('view/user/studentEdit.php');
+        require_once('view/all/footer.php');
+    }
+
+    public function actualizarEstudiante() {
+        $nombre = $_POST['name'];
+        $documento = $_POST['documento'];
+        $date = $_POST['date'];
+        $id = $_POST['id'];
+        $data = [
+            "nombre" => strtolower($nombre),
+            "documento" => $documento,
+            "date" => $date,
+            "id" => $id
+        ];
+
+        try {
+           parent::updateStudent($data);
+           header('location: '.APP_URL.'estudiantes');
+        } catch (\Throwable $th) {
+            header('location: '.APP_URL.'error');
+        }
+    }
+
     public function asignar() {
         $rol = $_POST['rol'];
         $estado = $_POST['estado'];
@@ -132,6 +219,22 @@ class userController extends users {
             header('location: '.APP_URL.'usuarios');
         } catch (\Throwable $th) {
             header('location: '.APP_URL.'error');
+        }
+    }
+
+    public function getGrade($grade) {
+        switch ($grade) {
+            case 'PREG':
+                return 1;
+            break;
+        }
+    }
+
+    public function getState($state){
+        switch ($state) {
+            case 'active':
+                return 1;
+            break;
         }
     }
 

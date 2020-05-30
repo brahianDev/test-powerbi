@@ -64,6 +64,10 @@
               <button type="submit" class="btn btn-success btn-user btn-block">Actualizar</button>
               <hr>
             </form>
+            <form action="<?php echo APP_URL ?>usuario/eliminar" method="POST">
+                <input type="hidden" name="id" value="<?php echo $_REQUEST['u'] ?>">
+                <button type="submit" class="btn btn-danger btn-user btn-block">Eliminar</button>
+              </form>
           </div>
         </div>
 
